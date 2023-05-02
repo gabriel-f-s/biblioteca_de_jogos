@@ -1,47 +1,55 @@
 import random
 
+
 def jogar():
 
     boasvindas()
-    usuario = input("Use 'r' para pedra, 'p' para papel e 's' para tesoura. \nDigite sua tentativa aqui: ").lower().strip()
-    comput = random.choice(["r", "p", "s"])
-
-    acertou = usuario_venceu(usuario, comput)
-    derrota = usuario_venceu(comput, usuario)
-    empate = usuario == comput
-
     print(" ")
+    total_de_tentativa = 5
+    conta_empate, conta_acerto, conta_derrota = 0, 0, 0
 
-    if empate:
-        print(f"O computador jogou '{comput}'")
-        print('Empate.')
+    for rodada in range(1, total_de_tentativa + 1):
 
-    elif acertou:
-        print(f"O computador jogou '{comput}'")
-        print('Você venceu!')
+        usuario = input("Use 'r' para pedra, 'p' para papel e 's' para tesoura. "
+                        "\nDigite sua tentativa aqui: ").lower().strip()
+        comput = random.choice(["r", "p", "s"])
 
-    elif derrota:
-        print(f"O computador jogou '{comput}'")
-        print('Você perdeu! Tente novamente!')
+        print(f"Tentativa {rodada} de {total_de_tentativa}")
 
-    else:
-        print("Digite apenas as letras válidas!\nLembre-se, use 'r' para pedra, 'p' para papel e 's' para tesoura.")
+        acertou = usuario_venceu(usuario, comput)
+        derrota = usuario_venceu(comput, usuario)
+        empate = usuario == comput
 
-    print(" ")
+        if empate:
+            print(f"O computador jogou '{comput}'")
+            print("")
+            print('Empate.')
+            print("")
+            conta_empate += 1
+            continue
 
-    tentativa = input("Deseja tentar novamente?\nDigite 's' para sim e 'n' para não: ")
-    if tentativa == 's':
-        print(" ")
-        jogar_novamente(empate, acertou, derrota)
+        elif acertou:
+            print(f"O computador jogou '{comput}'")
+            print("")
+            print('Você venceu!')
+            print("")
+            conta_acerto += 1
+            continue
 
-    elif tentativa == 'n':
-        print("************************************")
-        print("Fim do Jogo.")
+        elif derrota:
+            print(f"O computador jogou '{comput}'")
+            print("")
+            print('Você perdeu! Tente novamente!')
+            print("")
+            conta_derrota += 1
+            continue
 
-    else:
-        print("Digite apenas 's' ou 'n'.")
-        print("***************************************")
-        print("Fim do Jogo.")
+        else:
+            print("Digite apenas as letras válidas!\nLembre-se, use 'r' para pedra, 'p' para papel e 's' para tesoura.")
+            break
+    print(f"De {total_de_tentativa} tentativas, foram: "
+          f"\n{conta_acerto} acertos \n{conta_derrota} derrotas \n{conta_empate} empates.")
+    print("Fim de Jogo!")
 
 
 def boasvindas():
@@ -49,46 +57,12 @@ def boasvindas():
     print(' Bem vindo(a) ao Jokenpô (Pedra, Papel, Tesoura)! ')
     print("**************************************************")
 
+
 def usuario_venceu(jogador, oponente):
     if (jogador == "r" and oponente == "s") or (jogador == "s" and oponente == "p") or \
             (jogador == "p" and oponente == "r"):
         return True
 
-def jogar_novamente(empate, acertou, derrota):
-    usuario = input(
-        "Use 'r' para pedra, 'p' para papel e 's' para tesoura. \nDigite sua tentativa aqui: ").lower().strip()
-    comput = random.choice(["r", "p", "s"])
-
-    acertou = usuario_venceu(usuario, comput)
-    derrota = usuario_venceu(comput, usuario)
-    empate = usuario == comput
-
-    print(" ")
-    if empate:
-        print(f"O computador jogou '{comput}'")
-        print('Empate.')
-
-    elif acertou:
-        print(f"O computador jogou '{comput}'")
-        print('Você venceu!')
-
-    elif derrota:
-        print(f"O computador jogou '{comput}'")
-        print('Você perdeu! Tente novamente!')
-
-    else:
-        print("Digite apenas as letras válidas!\nLembre-se, use 'r' para pedra, 'p' para papel e 's' para tesoura.")
-
-    print(" ")
-
-    tentativa = input("Deseja tentar novamente?\nDigite 's' para sim e 'n' para não: ")
-    if tentativa == 's':
-        print(" ")
-        jogar_novamente(empate, acertou, derrota)
-
-    elif tentativa == 'n':
-        print("************************************")
-        print("Fim do Jogo.")
 
 if __name__ == "__main__":
     jogar()
